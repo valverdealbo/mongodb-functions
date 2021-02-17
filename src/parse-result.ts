@@ -39,7 +39,7 @@ export async function parseResult<T>(
     return result.ops.map(op => omit(op, keys(projection)) as T);
   }
   if ('result' in result) {
-    return result.deletedCount ?? 0;
+    return result.deletedCount as number;
   }
   return result.value ?? null;
 }
