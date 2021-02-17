@@ -1,0 +1,64 @@
+{
+  "name": "@valbo/mongodb-functions",
+  "version": "1.0.1",
+  "description": "Functions to make the MongoDB driver easier to use",
+  "keywords": [
+    "mongodb"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/valverdealbo/mongodb-functions",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:valverdealbo/mongodb-functions.git"
+  },
+  "author": "Cristóbal Valverde Albo",
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    },
+    "mongodbMemoryServer": {
+      "disablePostinstall": "1"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run test"
+    }
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/git": "^9.0.0",
+    "@semantic-release/npm": "^7.0.5",
+    "@semantic-release/release-notes-generator": "^9.0.1",
+    "@types/jest": "^26.0.20",
+    "@types/lodash": "^4.14.168",
+    "@typescript-eslint/eslint-plugin": "^4.15.0",
+    "@typescript-eslint/parser": "^4.15.0",
+    "commitizen": "^4.2.3",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.20.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "husky": "^4.3.8",
+    "jest": "^26.6.3",
+    "mongodb-memory-server": "^6.9.3",
+    "prettier": "^2.2.1",
+    "semantic-release": "^17.3.9",
+    "ts-jest": "^26.5.1",
+    "typescript": "^4.1.5"
+  },
+  "dependencies": {
+    "@types/mongodb": "=3.6.3",
+    "lodash": "^4.17.20",
+    "mongodb": "=3.6.3"
+  },
+  "scripts": {
+    "compile": "rm -Rf ./dist && tsc -p tsconfig.build.json",
+    "test": "jest --coverage",
+    "commit": "git-cz",
+    "prepublishOnly": "npm run compile"
+  }
+}
