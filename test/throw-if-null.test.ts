@@ -1,4 +1,4 @@
-import { throwIfNull } from './throw-if-null';
+import { throwIfNull } from '../src';
 
 describe('throwIfNull()', () => {
   const ifNullError = Error('value is null or undefined');
@@ -10,12 +10,7 @@ describe('throwIfNull()', () => {
   });
 
   test('should throw when the value is null', async () => {
-    expect.assertions(1);
-    try {
-      const input = Promise.resolve(null);
-      await throwIfNull(ifNullError, input);
-    } catch (error) {
-      expect(error).toBe(ifNullError);
-    }
+    const input = Promise.resolve(null);
+    await expect(throwIfNull(ifNullError, input)).rejects.toThrow(ifNullError);
   });
 });

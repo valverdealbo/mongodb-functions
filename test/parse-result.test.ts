@@ -1,7 +1,6 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { MongoClient, ObjectId, Collection } from 'mongodb';
 import { MongoMemoryReplSet } from 'mongodb-memory-server';
-import { parseResult } from './parse-result';
+import { parseResult, OmitProjection } from '../src';
 
 interface Doc {
   _id: ObjectId;
@@ -13,6 +12,7 @@ interface Doc {
 
 const doc1: Doc = { _id: new ObjectId(), name: 'one', age: 25, friends: 1, tag: 'one' };
 const doc2: Doc = { _id: new ObjectId(), name: 'two', age: 45, friends: 2, tag: 'two' };
+const projection: OmitProjection<Doc> = { tag: 0, friends: 0 };
 
 describe('parseResult()', () => {
   let server: MongoMemoryReplSet;
@@ -20,7 +20,7 @@ describe('parseResult()', () => {
   let collection: Collection<Doc>;
 
   beforeAll(async () => {
-    server = new MongoMemoryReplSet({ replSet: { storageEngine: 'wiredTiger' }, binary: { version: '4.4.3' } });
+    server = new MongoMemoryReplSet({ replSet: { storageEngine: 'wiredTiger' }, binary: { version: '4.4.5' } });
     await server.waitUntilRunning();
     const uri = await server.getUri();
     client = await MongoClient.connect(uri, { useUnifiedTopology: true });
@@ -43,7 +43,7 @@ describe('parseResult()', () => {
   });
 
   test('should omit the projection keys on insertOne', async () => {
-    const inserted = await parseResult(collection.insertOne(doc1), { tag: 0, friends: 0 });
+    const inserted = await parseResult(collection.insertOne(doc1), projection);
     expect(inserted).toEqual({
       _id: doc1._id,
       name: doc1.name,
@@ -57,7 +57,7 @@ describe('parseResult()', () => {
   });
 
   test('should omit the projection keys on insertMany', async () => {
-    const inserted = await parseResult(collection.insertMany([doc1, doc2]), { tag: 0, friends: 0 });
+    const inserted = await parseResult(collection.insertMany([doc1, doc2]), projection);
     expect(inserted).toEqual([
       {
         _id: doc1._id,
