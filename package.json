@@ -1,6 +1,6 @@
 {
   "name": "@valbo/mongodb-functions",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Functions to make the MongoDB driver easier to use",
   "keywords": [
     "mongodb"
