@@ -27,8 +27,8 @@ The **parseResult()** function parses the result of the following MongoDB driver
 
 | Collection method   | **parseResult()** returned value           |
 | :---                | :---                                       |
-| insertOne()         | The inserted document                      |
-| insertMany()        | The inserted documents                     |
+| insertOne()         | The _id of the inserted document           |
+| insertMany()        | An _id array of the inserted documents     |
 | findOneAndUpdate()  | The updated document or null if not found  |
 | findOneAndReplace() | The replaced document or null if not found |
 | findOneAndDelete()  | The deleted document or null if not found  |
@@ -36,7 +36,7 @@ The **parseResult()** function parses the result of the following MongoDB driver
 | deleteMany()        | The number of documents deleted            |
 
 ```typescript
-import { MongoClient, Collection } from 'mongodb';
+import { MongoClient, Collection, ObjectId } from 'mongodb';
 import { parseResult } from '@valbo/mongodb-functions';
 
 const client = await MongoClient.connect('mongodb://localhost:27017');
@@ -48,13 +48,13 @@ interface User {
 
 const collection = client.db('tests').collection<User>('users');
 
-const insertedUser: User = await parseResult(collection.insertOne({ name: 'Alice' }));
+const insertedId: ObjectId = await parseResult(collection.insertOne({ name: 'Alice' }));
 
-const insertedUsers: User[] = await parseResult(collection.insertMany([{ name: 'Bob' }, { name: 'Charlie' }]));
+const insertedIds: ObjectId[] = await parseResult(collection.insertMany([{ name: 'Bob' }, { name: 'Charlie' }]));
 
-const updatedUser: User | null = await parseResult(collection.findOneAndUpdate({ name: 'Bob' }, { $set: { name: 'Robert' } }, { returnOriginal: false }));
+const updatedUser: User | null = await parseResult(collection.findOneAndUpdate({ name: 'Bob' }, { $set: { name: 'Robert' } }, { returnDocument: 'after' }));
 
-const replacedUser: User | null = await parseResult(collection.findOneAndReplace({ name: 'Charlie' }, { name: 'Charles' }, { returnOriginal: false }));
+const replacedUser: User | null = await parseResult(collection.findOneAndReplace({ name: 'Charlie' }, { name: 'Charles' }, { returnDocument: 'after' }));
 
 const deletedUser: User | null = await parseResult(collection.findOneAndDelete({ name: 'Charles' }));
 

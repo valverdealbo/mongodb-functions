@@ -34,13 +34,13 @@ describe('parseResult()', () => {
   });
 
   test('should parse the result of insertOne', async () => {
-    const insertedCount = await parseResult(collection.insertOne(doc1));
-    expect(insertedCount).toEqual(1);
+    const insertedId = await parseResult(collection.insertOne(doc1));
+    expect(insertedId).toBe(doc1._id);
   });
 
   test('should parse the result of insertMany', async () => {
-    const insertedCount = await parseResult(collection.insertMany([doc1, doc2]));
-    expect(insertedCount).toEqual(2);
+    const insertedIds = await parseResult(collection.insertMany([doc1, doc2]));
+    expect(insertedIds).toEqual([doc1._id, doc2._id]);
   });
 
   test('should return the document when findOneAndUpdate finds it', async () => {
