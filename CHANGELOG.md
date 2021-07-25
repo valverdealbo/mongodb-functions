@@ -1,3 +1,16 @@
+# [2.0.0](https://github.com/valverdealbo/mongodb-functions/compare/v1.0.4...v2.0.0) (2021-07-25)
+
+
+### Features
+
+* update to mongodb driver v4 ([41439a1](https://github.com/valverdealbo/mongodb-functions/commit/41439a13709807fc8dfd25879fb07cbba064123b))
+
+
+### BREAKING CHANGES
+
+* parsing inserts no longer accepts a projection and returns inserted count instead
+of inserted documents
+
 ## [1.0.4](https://github.com/valverdealbo/mongodb-functions/compare/v1.0.3...v1.0.4) (2021-04-18)
 
 
