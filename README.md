@@ -63,18 +63,18 @@ const updatedCount: number = await parseResult(collection.updateMany({}, { $set:
 const deletedCount: number = await parseResult(collection.deleteMany({ name: 'Charles' }));
 ```
 
-### Throw error if null
+### Throw error if null or undefined
 
-Sometimes you are fine with getting a null when you cannot find, update or delete a document, but sometimes you want to throw an error immediately.
+Sometimes you are fine with getting a null or undefined when you cannot find, update or delete a document, but sometimes you want to throw an error immediately.
 
-The **throwIfNull()** function will throw the provided error if the result of a promise returns null:
+The **throwIfNil()** function will throw the provided error if the result of a promise returns null or undefined:
 
 ```typescript
-import { throwIfNull } from '@valbo/mongodb-functions';
+import { throwIfNil } from '@valbo/mongodb-functions';
 
 const notFoundError = new Error('user not found');
 
-const user: User = await throwIfNull(notFoundError, parseResult(collection.findOneAndUpdate({ name: 'Charles' }, { $set: { name: 'Charlie' } })));
+const user: User = await throwIfNil(notFoundError, parseResult(collection.findOneAndUpdate({ name: 'Charles' }, { $set: { name: 'Charlie' } })));
 // throws because document does not exist
 ```
 
@@ -107,7 +107,7 @@ The **withTransaction()** function of this package combines the functionality of
 import { withTransaction } from '@valbo/mongodb-functions';
 
 const newUser: User | null = await withTransaction(client, async session => {
-  const parent: User = await throwIfNull(notFoundError, collection.findOneAndUpdate({ name: 'Robert' }, { $set: { children: 1 } }, { returnOriginal: false, session }));
+  const parent: User = await throwIfNil(notFoundError, collection.findOneAndUpdate({ name: 'Robert' }, { $set: { children: 1 } }, { returnOriginal: false, session }));
   return await throwIfDuplicated(notUniqueError, collection.insertOne({ name: 'Daisy', parent: parent.name }, { session }));
 });
 ```
