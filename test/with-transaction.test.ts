@@ -1,6 +1,6 @@
 import { MongoClient, ObjectId, Collection } from 'mongodb';
 import { MongoMemoryReplSet } from 'mongodb-memory-server';
-import { withTransaction, Transaction } from '../src';
+import { withTransaction, Transaction } from '../src/with-transaction';
 
 interface Doc {
   _id: ObjectId;
@@ -20,12 +20,9 @@ describe('withTransaction()', () => {
   let collection: Collection<Doc>;
 
   beforeAll(async () => {
-    server = new MongoMemoryReplSet({ replSet: { storageEngine: 'wiredTiger' }, binary: { version: '4.4.5' } });
-    await server.waitUntilRunning();
-    const uri = await server.getUri();
-    client = await MongoClient.connect(uri, { useUnifiedTopology: true });
-    const dbName = await server.getDbName();
-    collection = client.db(dbName).collection('docs');
+    server = await MongoMemoryReplSet.create({ replSet: { storageEngine: 'wiredTiger' }, binary: { version: '4.4.5' } });
+    client = await MongoClient.connect(server.getUri());
+    collection = client.db(server.replSetOpts.dbName).collection('docs');
   });
 
   beforeEach(async () => {
@@ -38,22 +35,18 @@ describe('withTransaction()', () => {
   });
 
   test('should commit a transaction', async () => {
-    const transaction: Transaction<Doc> = async session => {
+    await withTransaction(client, async session => {
       await collection.insertOne(doc1, { session });
-      const result = await collection.insertOne(doc2, { session });
-      return result.ops[0];
-    };
-    const inserted = await withTransaction(client, transaction);
-    expect(inserted.name).toBe(doc2.name);
+      await collection.insertOne(doc2, { session });
+    });
     const found = await collection.find().toArray();
     expect(found).toHaveLength(2);
   });
 
   test('should abort a transaction', async () => {
-    const transaction: Transaction<Doc> = async session => {
+    const transaction: Transaction<void> = async session => {
       await collection.insertOne(doc1, { session });
-      const result = await collection.insertOne(duplicatedDoc, { session });
-      return result.ops[0];
+      await collection.insertOne(duplicatedDoc, { session });
     };
     await expect(withTransaction(client, transaction)).rejects.toMatchObject({ code: 11000 });
     const found = await collection.find().toArray();

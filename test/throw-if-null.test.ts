@@ -1,4 +1,4 @@
-import { throwIfNull } from '../src';
+import { throwIfNull } from '../src/throw-if-null';
 
 describe('throwIfNull()', () => {
   const ifNullError = Error('value is null or undefined');

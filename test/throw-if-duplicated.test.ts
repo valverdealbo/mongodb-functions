@@ -1,5 +1,5 @@
 import { MongoError } from 'mongodb';
-import { throwIfDuplicated } from '../src';
+import { throwIfDuplicated } from '../src/throw-if-duplicated';
 
 describe('throwIfDuplicated()', () => {
   const ifDuplicatedError = Error('value is duplicated');
