@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/valverdealbo/mongodb-functions/compare/v2.0.0...v2.0.1) (2021-07-25)
+
+
+### Bug Fixes
+
+* parseResult() of insertOne/insertMany returns the _id of the inserted document/s ([e858f17](https://github.com/valverdealbo/mongodb-functions/commit/e858f1777d3b4cdfebee6e731bcc4820e9de439b))
+
 # [2.0.0](https://github.com/valverdealbo/mongodb-functions/compare/v1.0.4...v2.0.0) (2021-07-25)
 
 
