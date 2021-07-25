@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/valverdealbo/mongodb-functions/compare/v2.0.1...v2.1.0) (2021-07-25)
+
+
+### Features
+
+* replace throwIfNull for throwIfNil ([aa94bb8](https://github.com/valverdealbo/mongodb-functions/commit/aa94bb840a9823266880e7d85da16268da03aade))
+
 ## [2.0.1](https://github.com/valverdealbo/mongodb-functions/compare/v2.0.0...v2.0.1) (2021-07-25)
 
 
