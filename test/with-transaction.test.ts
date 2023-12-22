@@ -20,7 +20,7 @@ describe('withTransaction()', () => {
   let collection: Collection<Doc>;
 
   beforeAll(async () => {
-    server = await MongoMemoryReplSet.create({ replSet: { storageEngine: 'wiredTiger' }, binary: { version: '4.4.5' } });
+    server = await MongoMemoryReplSet.create({ replSet: { storageEngine: 'wiredTiger' }, binary: { version: '6.0.12' } });
     client = await MongoClient.connect(server.getUri());
     collection = client.db(server.replSetOpts.dbName).collection('docs');
   });

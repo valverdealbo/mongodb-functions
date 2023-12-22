@@ -19,7 +19,7 @@ describe('parseResult()', () => {
   let collection: Collection<Doc>;
 
   beforeAll(async () => {
-    server = await MongoMemoryReplSet.create({ replSet: { storageEngine: 'wiredTiger' }, binary: { version: '4.4.5' } });
+    server = await MongoMemoryReplSet.create({ replSet: { storageEngine: 'wiredTiger' }, binary: { version: '6.0.12' } });
     client = await MongoClient.connect(server.getUri());
     collection = client.db(server.replSetOpts.dbName).collection('docs');
   });
@@ -41,17 +41,6 @@ describe('parseResult()', () => {
   test('should parse the result of insertMany', async () => {
     const insertedIds = await parseResult(collection.insertMany([doc1, doc2]));
     expect(insertedIds).toEqual([doc1._id, doc2._id]);
-  });
-
-  test('should return the document when findOneAndUpdate finds it', async () => {
-    await collection.insertOne(doc1);
-    const updated = await parseResult(collection.findOneAndUpdate({ _id: doc1._id }, { $set: { name: 'updated' } }, { returnDocument: 'after' }));
-    expect(updated).toEqual({ ...doc1, name: 'updated' });
-  });
-
-  test('should return null when findOneAndUpdate does not find the document', async () => {
-    const updated = await parseResult(collection.findOneAndUpdate({ _id: doc1._id }, { $set: { name: 'updated' } }));
-    expect(updated).toBeNull();
   });
 
   test('should parse the result of updateMany', async () => {

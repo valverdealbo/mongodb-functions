@@ -3,10 +3,13 @@
   "collectCoverage": true,
   "setupFilesAfterEnv": ["./jest.setup.js"],
   "preset": "ts-jest",
-  "globals": {
-  "ts-jest": {
-    "isolatedModules": true
-  }
-},
+  "transform": {
+    "^.+\\.tsx?$": [
+      "ts-jest",
+      {
+        "isolatedModules": true
+      }
+    ]
+  },
   "testPathIgnorePatterns": ["/node_modules/", "/dist/"]
 }

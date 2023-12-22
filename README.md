@@ -29,9 +29,6 @@ The **parseResult()** function parses the result of the following MongoDB driver
 | :---                | :---                                       |
 | insertOne()         | The _id of the inserted document           |
 | insertMany()        | An _id array of the inserted documents     |
-| findOneAndUpdate()  | The updated document or null if not found  |
-| findOneAndReplace() | The replaced document or null if not found |
-| findOneAndDelete()  | The deleted document or null if not found  |
 | updateMany()        | The number of documents updated            |
 | deleteMany()        | The number of documents deleted            |
 
@@ -51,12 +48,6 @@ const collection = client.db('tests').collection<User>('users');
 const insertedId: ObjectId = await parseResult(collection.insertOne({ name: 'Alice' }));
 
 const insertedIds: ObjectId[] = await parseResult(collection.insertMany([{ name: 'Bob' }, { name: 'Charlie' }]));
-
-const updatedUser: User | null = await parseResult(collection.findOneAndUpdate({ name: 'Bob' }, { $set: { name: 'Robert' } }, { returnDocument: 'after' }));
-
-const replacedUser: User | null = await parseResult(collection.findOneAndReplace({ name: 'Charlie' }, { name: 'Charles' }, { returnDocument: 'after' }));
-
-const deletedUser: User | null = await parseResult(collection.findOneAndDelete({ name: 'Charles' }));
 
 const updatedCount: number = await parseResult(collection.updateMany({}, { $set: { updated: true } }));
 
@@ -98,8 +89,7 @@ const user: User = await throwIfDuplicated(notUniqueError, parseResult(collectio
 
 ### Transactions
 
-The MongoDB driver has two functions that you have to combine to run a transaction: **withSession()** and **withTransaction()**. Both functions return **void**, 
-so it is not easy to return the result from inside a transaction.
+The MongoDB driver has two functions that you have to combine to run a transaction: **withSession()** and **withTransaction()**.
 
 The **withTransaction()** function of this package combines the functionality of the those two functions and returns the result of the transaction:
 

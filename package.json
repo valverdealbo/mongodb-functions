@@ -17,37 +17,34 @@
   "config": {
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
-    },
-    "mongodbMemoryServer": {
-      "disablePostinstall": "1"
     }
   },
   "devDependencies": {
-    "@semantic-release/changelog": "^5.0.1",
-    "@semantic-release/git": "^9.0.0",
-    "@types/jest": "^26.0.22",
-    "@typescript-eslint/eslint-plugin": "^4.22.0",
-    "@typescript-eslint/parser": "^4.22.0",
-    "commitizen": "^4.2.3",
-    "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^7.24.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-config-prettier": "^8.2.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jest": "^24.3.5",
-    "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-promise": "^5.1.0",
-    "jest": "^27.0.6",
-    "mongodb-memory-server": "^7.3.2",
-    "npm": "^7.10.0",
-    "prettier": "^2.2.1",
-    "rimraf": "^3.0.2",
-    "semantic-release": "^17.4.2",
-    "ts-jest": "^27.0.4",
-    "typescript": "^4.2.4"
+    "@semantic-release/changelog": "6.0.3",
+    "@semantic-release/git": "10.0.1",
+    "@types/jest": "29.5.11",
+    "@typescript-eslint/eslint-plugin": "6.15.0",
+    "@typescript-eslint/parser": "6.15.0",
+    "commitizen": "4.3.0",
+    "cz-conventional-changelog": "3.3.0",
+    "eslint": "8.56.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-jest": "27.6.0",
+    "eslint-plugin-prettier": "5.1.1",
+    "eslint-plugin-promise": "6.1.1",
+    "jest": "29.7.0",
+    "mongodb-memory-server": "9.1.3",
+    "npm": "10.2.5",
+    "prettier": "3.1.1",
+    "rimraf": "5.0.5",
+    "semantic-release": "22.0.12",
+    "ts-jest": "29.1.1",
+    "typescript": "5.3.3"
   },
   "dependencies": {
-    "mongodb": "^4.0.1"
+    "mongodb": "6.3.0"
   },
   "scripts": {
     "build": "rimraf ./dist && tsc",

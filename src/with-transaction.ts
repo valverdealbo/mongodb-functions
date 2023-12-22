@@ -5,11 +5,9 @@ export interface Transaction<T> {
 }
 
 export async function withTransaction<T>(client: MongoClient, transaction: Transaction<T>): Promise<T> {
-  const wrapper: Record<string, T> = {};
-  await client.withSession(async session => {
-    await session.withTransaction(async innerSession => {
-      wrapper.value = await transaction(innerSession);
+  return client.withSession(async session => {
+    return session.withTransaction(async innerSession => {
+      return transaction(innerSession);
     });
   });
-  return wrapper.value;
 }
