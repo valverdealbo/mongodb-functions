@@ -1,3 +1,20 @@
+# [3.0.0](https://github.com/valverdealbo/mongodb-functions/compare/v2.1.0...v3.0.0) (2023-12-22)
+
+
+### Bug Fixes
+
+* upgrade github actions CI workflow node version to 18 ([d258b25](https://github.com/valverdealbo/mongodb-functions/commit/d258b25a31c95c0281deaf252da42806cbfe44d9))
+
+
+### Features
+
+* update package to MongoDB driver 6 ([2d521ec](https://github.com/valverdealbo/mongodb-functions/commit/2d521eccbd19ce23e2ecc8340ceef41f64ed6ec2))
+
+
+### BREAKING CHANGES
+
+* driver has changed the behaviour of findOneAndX, withSession and withTransaction
+
 # [2.1.0](https://github.com/valverdealbo/mongodb-functions/compare/v2.0.1...v2.1.0) (2021-07-25)
 
 
